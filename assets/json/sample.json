@@ -1,0 +1,83 @@
+{
+    "person": {
+      "name": [{
+        "firstName": "your first name",
+        "lastName": "last name",
+        "gender": "male/female/non-binary/other/refuse",
+        "dob": "dob in format MMMM D, YYYY"
+        }
+      ],
+      "label": "",
+      "picture": "",
+      "email": "email address",
+      "phone": "(555) 555-5555.",
+      "degree": "",
+      "website": "website URL",
+      "summary": "executive summary????",
+      "location": {
+        "address": "street address or mailing address",
+        "zipCode": "Your postal code (ZIP in the U.S.)",
+        "city": "city",
+        "state": "state",
+        "countryCode": "Your country (e.g. USA)"
+      },
+      "profiles": [
+        {
+          "linkedIn": "linkedIn",
+          "facebook": "facebook",
+          "ig": "instagram",
+          "website": "user website/profile"
+        }
+      ]
+    },
+    "work": [
+      {
+        "company": "employer name",
+        "position": "job title",
+        "startDate": "start date, in MMMMM D, YYYYY format",
+        "endDate": "end date, in YYY-MM-DD format (leave blank for a current position)",
+        "summary": "summary",
+        "highlights": [
+          "list 2 - 3 highlights from postion."
+        ]
+      }
+    ],
+    "education": [
+      {
+        "institution": "university/school name",
+        "area": "area of study or degree earned",
+        "studyType": "",
+        "startDate": "start, MMMMM D, YYYY",
+        "endDate": "completion, MMMMM D, YYYY leave blank if currently attending",
+        "gpa": ""
+      }
+    ],
+    "awards": [
+      {
+        "title": "title",
+        "date": "received MMMMM D, YYYY",
+        "awarder": "given by",
+        "summary": "overview"
+      }
+    ],
+    "skills": [
+      {
+        "name": [
+            "name maybe ul/li"
+        ]
+      }
+    ],
+    "interests": [
+      {
+        "name": "interests/hobbie"
+      }
+    ],
+    "languages": [
+        {
+          "name": "names  ul/li?"
+        }
+      ]
+  }
+  
+  
+

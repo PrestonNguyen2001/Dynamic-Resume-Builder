@@ -1,0 +1,68 @@
+var person = {
+    firstName: "fred",
+    lastName: "hubert",
+    gender: "Male"
+    dob: July 12, 1962
+}
+
+var location = {
+    address: "4618 Main Street",
+    zipCode: "21042",
+    city: "your home town",
+    state: "Maryland",
+    countryCode: "United States"
+}
+
+var profiles = {
+    linkedIn: "https://linkedin.com/myprofile",
+    facebook: "https://facebook.com",
+    ig: "https://instagram.com"
+    website: "https://www.google.com"
+}
+
+var experience = {
+    company: "McDondals",
+    position: "Hamburgler",
+    startdate: "April 1, 2023"
+    endDate: "",
+    summary: "stealing all the burgers",
+    highlights: whatIdid
+}
+
+var whatIdid = ["eat", "drink", "party"]
+
+var education = {
+    institution: "Ronald High School",
+    area: "fry cook",
+    studyType: "all areas or food prep",
+    startdate: "August 28, 2018",
+    endDate: "May 28, 2022",
+    gpa: "4.0"
+}
+
+var awards = {
+    title: "King of the Fries",
+    date: "June 1, 2020",
+    awarder: "Ronald McDonald",
+    summary: "thanked my mom and dad"
+}
+
+var skills = {
+    names: mySkills
+}
+
+var mySkills = ["cashier", "cook", "dish washer"]
+
+var interests = {
+    names: myInterests
+}
+
+var myInterests = ["long walks in the park", "reading"]
+
+languages = {
+    names: myLanguages
+}
+
+var myLanguages = []
+
+
