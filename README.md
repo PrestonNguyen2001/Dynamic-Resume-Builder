@@ -1,2 +1,15 @@
 # Dynamic-Resume-Builder
-Interactive Front-End Project
+User story 
+
+
+
+
+
+Acceptance Criteria
+
+
+
+
+
+
+Link to deployment URL:
