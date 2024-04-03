@@ -87,3 +87,39 @@ const updateProgress = () => {
         nextButton.disabled = false;
     }
 };
+
+// Visibility Control Functions
+function visibler() {
+    $(".dwnldimage, .printCv, .back-to-form, .palette").css('display', 'inline-block').fadeIn();
+}
+  
+function printer() {
+    $(".dwnldimage, .printCv, .back-to-form, .palette").css('display', 'none'); 
+    window.print();
+    setTimeout(visibler, 500);
+}
+
+
+// Image Upload & Preview
+$('.imgContainer').click(function () {
+    $('#inputImg').click();
+});
+  
+$('#inputImg').change(function () {
+    const file = this.files[0];
+    if (file) {
+        const reader = new FileReader();
+        $('#previewText').css('display', 'none');
+        $('.imgContainer').css('border', 'none');
+        $('#image').css('display', 'block');
+        reader.addEventListener('load', function () {
+            $('#image').attr('src', this.result);
+        });
+        reader.readAsDataURL(file);
+    } else {
+        document.getElementById('previewText').style.display = null;
+        document.getElementById('image').style.display = null;
+        document.getElementsByClassName('imgContainer')[0].style.border = null;
+        $('#image').attr('src', '');
+    }
+});

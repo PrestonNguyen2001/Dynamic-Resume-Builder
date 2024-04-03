@@ -93,6 +93,12 @@ h3 {
     border: 2px solid #dddddd;
     cursor: pointer;
 }
+#achv_description {
+    white-space: pre-wrap;
+}
+#profile {
+    white-space: pre-wrap;
+}
 #previewText {
     width: 100%;
     height: 100%;
@@ -114,6 +120,24 @@ h3 {
 }
 #inputImg {
     display: none;
+}
+
+.back-to-form {
+    position: fixed;
+    top: 10px;
+    left: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 45px;
+    border: 1px solid gray;
+    padding: 5px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.template.container-fluid {
+    position: absolute;
+    top: 0;
 }
 
 .card {
@@ -433,12 +457,12 @@ form > div.active {
     border-color: var(--light-color);
 }
 
-.btn-group .btn-submit,
+.btn-group .generateCv_btn,
 .form-three.active ~ .btn-group-container .btn-group .btn-next{
     display: none;
 }
 
-.form-three.active ~ .btn-group-container .btn-group .btn-submit {
+.form-three.active ~ .btn-group-container .btn-group .generateCv_btn {
     display: block;
 }
 
