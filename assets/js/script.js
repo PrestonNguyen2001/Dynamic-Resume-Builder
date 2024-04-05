@@ -88,6 +88,57 @@ const updateProgress = () => {
     }
 };
 
+// Flip Card Functions
+$(document).ready(function () {
+    let currentlyOpenFlipCard = null;
+
+    function slideTog(el) {
+        $(el).next().slideToggle(300);
+    }
+
+    $(".flip0, .flip1, .flip2, .flip3, .flip4, .flip5, .flip6, .flip7").click(function () {
+        // Check if another flip card is open, close it if it's different from the clicked one
+        if (currentlyOpenFlipCard && currentlyOpenFlipCard !== this) {
+            $(currentlyOpenFlipCard).next().slideUp(300);
+        }
+        // Toggle the clicked flip card
+        slideTog(this);
+        currentlyOpenFlipCard = this;
+    });
+
+    //**************** Form Steps ****************//
+    let steps = Array.from(document.querySelectorAll('form.step'));
+    let next_btn = document.querySelectorAll('form .next_btn');
+    let prev_btn = document.querySelectorAll('form .prev_btn');
+
+    next_btn.forEach(button => {
+        button.addEventListener('click', () => {
+            if (validate_form1(this))
+                changeStep('next');
+        });
+    });
+
+    prev_btn.forEach(button => {
+        button.addEventListener('click', () => {
+            changeStep('prev');
+        });
+    });
+
+    let index = 0;
+    function changeStep(btn) {
+        let active = document.querySelector('form.step.active')
+        index = steps.indexOf(active);
+        steps[index].classList.remove('active');
+        if (btn === 'next') {
+            if ((index < steps.length - 1))
+                index++;
+        }
+        else if (btn === 'prev')
+            index--;
+        steps[index].classList.add('active');
+    }
+});
+
 // Visibility Control Functions
 function visibler() {
     $(".dwnldimage, .printCv, .back-to-form, .palette").css('display', 'inline-block').fadeIn();
@@ -208,3 +259,5 @@ function getCities() {
     }
   })
 }
+
+
