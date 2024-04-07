@@ -260,4 +260,90 @@ function getCities() {
   })
 }
 
+/*************** Phone number validataion ***************/
+
+$("#phone-input").blur(function() {
+  // This function will be executed when the phone number input loses focus
+  validatePhoneNumber($(this).val());
+});
+
+
+// validate phone number
+// basic validation and call to service to validate
+function validatePhoneNumber(phoneNumber) {
+  
+  console.log("Phone number entered:", phoneNumber);
+
+  // basic audits before calling api
+  if (!basicPhoneNumberValidation(phoneNumber)) {
+      alert('basic validation failed');
+  };
+
+  // check local storage - if passed matches storage no need to revalidate
+  const lsPhoneNum = localStorage.getItem('phoneNum');    
+  if (lsPhoneNum === phoneNumber) {
+      return;
+  }
+
+  // call api to validate phone number
+  const valPhoneAccessKey = '18138c51516703472e379936d4479762' // valid key
+  //const valPhoneAccessKey = '18138c51516703472e379936d44797' // invalid key
+  const valPhoneUrl = 'http://apilayer.net/api/validate?access_key=' + valPhoneAccessKey + 
+                      '&number=' + 
+                      phoneNumber + 
+                      '&country_code=US';
+
+  fetch(valPhoneUrl)
+      .then(response => {
+          if (response.status === 200) {
+              return response.json()
+          } else {
+              // errpr processing
+              throw new Error("Error calling phone number validation: " + response.error.info);         
+          }
+      })
+      .then(data => {
+          console.log(data);
+          if (data.error) {
+              throw new Error("Error calling phone number validation: " + data.error.info);
+          } else if (!data.valid) {
+              throw new Error('the ' + phoneNumber + ' you entered is not valid');
+          }
+      })
+      .catch(error => {
+          console.error('Validate Phone Number -', error); 
+      });
+
+      // set temp storage
+      localStorage.setItem('phoneNum', phoneNumber);
+
+}
+
+// basic phone number audits
+// sure there are alot more but this covers the basics
+function basicPhoneNumberValidation(phoneNumber) {
+  
+  const reservedAreaCodes = ["800", "888", "877", "866", "855", "844", "833"];
+  
+  // Remove non-numeric characters from the phone number
+  phoneNumber = phoneNumber.replace(/\D/g, '');
+  // get exchange
+  const exchange = phoneNumber.substring(3, 6);
+  // get area code 
+  const areaCode = phoneNumber.substring(0, 2);
+
+
+  // length has to be greater or
+  // can't start 1 or
+  // area code can't be 555, 800, 877, 866, 855, 844, 833
+  if ((phoneNumber.length < 10) ||  // requires country code default US - 1
+//       (phoneNumber.startsWith(1)) || 
+     (reservedAreaCodes.includes(areaCode)) ||
+     (exchange === '555') ) {
+      return false;        
+  }
+
+  return true;
+}
+
 
