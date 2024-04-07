@@ -164,7 +164,7 @@ div[class*="panel"] {
 }
 
 .container {
-    max-width: 1400px;
+    max-width: 1600px;
     margin: 0 auto;
     padding: 0 2em;
 }
@@ -434,7 +434,8 @@ form > div.active {
     margin-top: 2em;
 }
 
-.btn-group [class*="btn-"] {
+.btn-group [class*="btn-"],
+.generateCv_btn {
     background-color: var(--main-color);
     color: white;
     padding: 1em 2.5em;
@@ -446,13 +447,15 @@ form > div.active {
     justify-content: center;
 }
 
-.btn-group [class*="btn-"]:disabled {
+.btn-group [class*="btn-"]:disabled,
+.generateCv_btn:disabled {
     background-color: var(--light-color);
     border-color: var(--lighter-color);
     cursor: text;
 }
 
-.btn-group [class*="btn-"]:hover:not(:disabled) {
+.btn-group [class*="btn-"]:hover:not(:disabled),
+.generateCv_btn:hover:not(:disabled) {
     background-color: var(--dark-color);
     border-color: var(--light-color);
 }
