@@ -39,3 +39,11 @@ li {
   padding-left: 2.5rem;
 }
 
+
+.light-blue-background {
+ background-color: #e7f0fd; /* Light blue color */
+  color: black;
+  padding: 15px;
+   border: 2px solid #80bfff; /* Border color for contrast */
+   border-radius: 8px;
+  }
