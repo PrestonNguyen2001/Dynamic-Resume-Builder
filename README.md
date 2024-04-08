@@ -54,6 +54,7 @@ THEN all of my previous inputs are saved, allowing me to make changes easily.
 - **Third-Party API's**:
     - Universal Tutorial API is used to obtain an access token for accessing country, state, and city data.
     - Apilayer Phone Number Validation API is used to validate phone numbers. 
+    - Email Validation and Verification API is used to validate email. 
 - **Data Storage**: 
     - Local storage (for temporary storage of phone number)
 - **Other Tools/Services**:
@@ -92,6 +93,9 @@ THEN all of my previous inputs are saved, allowing me to make changes easily.
     - If you wish to make changes to your resume, you have the option to go back to the form where all your previous inputs are saved.
 9. Saving and Downloading:
     - Once you're satisfied with your resume, you can save it or download it as a PDF file for further use.
+
+![Landing Page Mockup](assets/images/landingpage.png)
+![Builder Page Mockup](assets/images/builderpage.png)
 
 ## License
 This project is licensed under the [MIT License](LICENSE).
