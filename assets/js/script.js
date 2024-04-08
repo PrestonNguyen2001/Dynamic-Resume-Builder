@@ -690,7 +690,7 @@ function isValidEmail(email) {
   
   function generateCvAndUpdateTemplate(template) {
     let email = $('#email').val().trim();
-    if (!isValidEmail(email)) {
+    if (!isValidEmail(email) && !validateEmailAddress($(this).val())) {
       alert('Please enter a valid email address.');
       return;
     }
@@ -974,7 +974,9 @@ function generateCV(template) {
 
 $("#phone-input").blur(function() {
   // This function will be executed when the phone number input loses focus
-  validatePhoneNumber($(this).val());
+  if ($(this).val().length > 0) {
+    validatePhoneNumber($(this).val());
+  }
 });
 
 
@@ -997,7 +999,6 @@ function validatePhoneNumber(phoneNumber) {
 
   // call api to validate phone number
   const valPhoneAccessKey = '18138c51516703472e379936d4479762' // valid key
-  //const valPhoneAccessKey = '18138c51516703472e379936d44797' // invalid key
   const valPhoneUrl = 'http://apilayer.net/api/validate?access_key=' + valPhoneAccessKey + 
                       '&number=' + 
                       phoneNumber + 
@@ -1008,7 +1009,7 @@ function validatePhoneNumber(phoneNumber) {
           if (response.status === 200) {
               return response.json()
           } else {
-              // errpr processing
+              // error processing
               throw new Error("Error calling phone number validation: " + response.error.info);         
           }
       })
@@ -1042,12 +1043,10 @@ function basicPhoneNumberValidation(phoneNumber) {
   // get area code 
   const areaCode = phoneNumber.substring(0, 2);
 
-
   // length has to be greater or
   // can't start 1 or
   // area code can't be 555, 800, 877, 866, 855, 844, 833
   if ((phoneNumber.length < 10) ||  // requires country code default US - 1
-//       (phoneNumber.startsWith(1)) || 
      (reservedAreaCodes.includes(areaCode)) ||
      (exchange === '555') ) {
       return false;        
@@ -1056,4 +1055,58 @@ function basicPhoneNumberValidation(phoneNumber) {
   return true;
 }
 
+/*************** email address validataion ***************/
 
+$("#email").blur(function() {
+  // This function will be executed when the email address loses focus
+  if (!validateEmailAddress($(this).val()) && !isValidEmail(email)) {
+    alert("Email address is not valid. Please enter valid email address");
+    $("#email").focus();
+  }
+});
+
+function validateEmailAddress(emailAddr) {
+
+  // check local storage - if passed matches storage no need to revalidate
+  const lsEmailAddr = localStorage.getItem('emailAddr');    
+  if (lsEmailAddr === emailAddr) {
+      return true;
+  }
+  // call api to validate email address
+  const accessKey = '899a2c49d0b44000a19ae1f4d1ed0859';
+  const valEmailAddrUrl = 'https://emailvalidation.abstractapi.com/v1/?api_key='
+                          + accessKey 
+                          + '&email=' + emailAddr;
+
+  fetch(valEmailAddrUrl)
+    .then(response => {
+        if (response.status === 200) {
+            return response.json()
+        } else {
+            // error processing
+            console.log("Error calling email address validation: " + response.error.info);
+            return false;
+        }
+    })
+    .then(data => {
+        console.log(data);
+        console.log('email: ' + data.email);
+        console.log("mx: " + data.is_mx_found.value);
+        console.log("smtp: " + data.is_smtp_valid.value);
+        console.log('deliverablity: ' + data.deliverability);
+        if ((!data.is_mx_found.value || !data.is_smtp_valid.value) && data.deliverability !== "DELIVERABLE") {
+            // error processing
+            console.log("Error calling email address validation mx or smtp is not valid");
+            return false;
+        }
+    })
+    .catch(error => {
+        console.error('Validate Email Address -', error); 
+        return false;
+    });
+
+  // set temp storage
+  localStorage.setItem('emailAddr', emailAddr);      
+  return true;
+
+}

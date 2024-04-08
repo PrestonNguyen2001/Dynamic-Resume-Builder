@@ -119,7 +119,7 @@ class Awards {
             Awarder: ${this.awarder}\n
             Summary: ${this.summary}`; 
     }    
-    
+
 }
 
 // skills
@@ -147,22 +147,23 @@ class Resume {
     }
 
     toString() {
-        return `Resume: (${this.person.toString}\n
-                        ${this.label.toString}\n
-                        ${this.location.toString}\n
-                        ${this.profiles.toString = function() {
-                            return this.map(obj => obj.toString()).join('\n');
-                        }};
-                        ${this.work.toString = function() {
-                            return this.map(obj => obj.toString()).join('\n');
-                        }};
-                        ${this.education.toString  = function() {
-                            return this.map(obj => obj.toString()).join('\n');
-                        }};
-                        ${this.skills.toString}\n
-                        ${this.interests.toString}\n
-                        ${this.languages.toString}\n
-                        ${this.references.toString})`; 
+        return `Resume:/n
+                    ${this.person.toString}\n
+                    ${this.label.toString}\n
+                    ${this.location.toString}\n
+                    ${this.profiles.toString = function() {
+                        return this.map(obj => obj.toString()).join('\n');
+                    }};
+                    ${this.work.toString = function() {
+                        return this.map(obj => obj.toString()).join('\n');
+                    }};
+                    ${this.education.toString  = function() {
+                        return this.map(obj => obj.toString()).join('\n');
+                    }};
+                    ${this.skills.toString}\n
+                    ${this.interests.toString}\n
+                    ${this.languages.toString}\n
+                    ${this.references.toString})`; 
     }    
                            
 
