@@ -1,43 +1,19 @@
 /*-----------------------------------*\
-  #MODALS
+  #MODAL
 \*-----------------------------------*/
 // Hiding the modal initially
 const modal = document.querySelector(".modal");
 modal.style.display = "none";
-
-const modalImport = document.querySelector(".importModal");
-modalImport.style.display = "none";
 
 // Function to open the modal
 function openModal() {
     modal.style.display = "block";
 }
 
-// Function to close the modal
-function closeModal() {
-    modal.style.display = "none";
-}
-  
-// Event listener for the "Create New" button
-document.querySelector(".resumeBtn").addEventListener("click", openModal);
-  
-// Function to open the import modal
-function openImportModal() {
-    var modal = document.querySelector('.importModal');
-    modal.classList.add('is-open');
-    modal.style.display = "block";
-}
-  
-// Function to close the import modal
-function closeImportModal() {
-    var modal = document.querySelector('.importModal');
-    modal.classList.remove('is-open');
-}
-  
-// Event listener for the import button
-document.querySelector('.resumeBtn.import').addEventListener('click', function() {
-    openImportModal();
-});
+// Event listener for window load
+window.onload = function() {
+    openModal();
+};
 
 /*-----------------------------------*\
   #FORMS
@@ -196,8 +172,8 @@ $(document).ready(function () {
     },
     headers: {
       "Accept": "application/json",
-      "api-token": "QFZCxL-P9DDVZzxIYTti85dbkTb-RZYqW4fG39dTvmeLJ9TCRmVj-UQSruPENKH3MCw",
-      "user-email": "murtazamister1@gmail.com"
+      "api-token": "4LHNVVuJz0jaja4pKYVhesbbyrv7o3xvUwobldkN1GdHLGk5VVUWPKs2tK4xefuhm-0",
+      "user-email": "prestonnguyen2001@gmail.com"
     }
   })
 })
@@ -269,6 +245,7 @@ let skill = 0;
 let work = 0;
 let interest = 0;
 let lang = 0;
+let ref = 0;
 
 function adder(event, element) {
   if (event.key === 'Enter') {
@@ -641,6 +618,79 @@ $("#add_lang").click(function (e) {
     }
 });
 
+//  **********  ********** REFERENCES **********  **********
+function updateRef() {
+    for (let i = 0; i < $('#accordionRef .accordion-item').length; i++) {
+      let a = ($('#accordionRef .accordion-item:nth-child(' + (i + 1) + ') .ref_name').val().trim() == '') ? 'Reference' : $('#accordionRef .accordion-item:nth-child(' + (i + 1) + ') .ref_name').val().trim();
+      $('#accordionRef .accordion-item:nth-child(' + (i + 1) + ') .accordion-button').html(a);
+    }
+}
+
+function rmakeVisible() {
+    $("#accordionRef .accordion-header").css("display", "block");
+    updateRef();
+}
+
+function delRef2(event) {
+    event.preventDefault();
+    if ($("#accordionRef .accordion-item").length > 1) {
+        rmakeVisible();
+        event.target.parentElement.parentElement.parentElement.remove();
+    }
+    event.stopPropagation();
+}
+
+$('.flipCard7').click(function () {
+    ref = 1;
+    $('.flipCard7').off('click');
+});
+
+let refAdder = $("#accordionRef").html();
+let refCounter = 1;
+
+$("#add_ref").click(function (e) {
+    let isValid = true;
+    let finalValid = true;
+    $("#accordionRef .accordion-item:last-child").find("input").each(function () { isValid = validate_chg_color(this); if (!isValid) { finalValid = false; } });
+    if (!finalValid) {
+        e.preventDefault();
+    }
+    else {
+        updateRef();
+        refCounter++;
+        if ($("#accordionRef .accordion-item").length > 0) {
+            $("#accordionRef .accordion-header").css("display", "block");
+            let count = $("#accordionRef .accordion-item").length;
+            if (document.getElementById("accordionRef").getElementsByClassName("accordion-item")[count - 1].getElementsByClassName("accordion-collapse")[0].classList.contains("show")) {
+                document.getElementById("accordionRef").getElementsByClassName("accordion-item")[count - 1].getElementsByClassName("accordion-button")[0].click();
+            }
+        }
+        $("#accordionRef").append(refAdder);
+        $("#accordionRef .accordion-header").last().attr("id", "rheading" + refCounter);
+        $("#accordionRef .accordion-collapse").last().attr("aria-labelledby", "rheading" + refCounter);
+        $("#accordionRef .accordion-collapse").last().attr("id", "rcollapse" + refCounter);
+        $("#accordionRef .accordion-button").last().attr("data-bs-target", "#rcollapse" + refCounter);
+        $("#accordionRef .accordion-button").last().attr("aria-controls", "rcollapse" + refCounter);
+    }
+});
+
+$(".flipCard7").mouseleave(function () {
+    if (ref == 0) { return; }
+    let timer = window.setTimeout(function () {
+        rmakeVisible();
+        let count = $("#accordionRef .accordion-item").length;
+        for (let i = 0; i < count; i++) {
+            if (document.getElementById("accordionRef").getElementsByClassName("accordion-item")[i].getElementsByClassName("accordion-collapse")[0].classList.contains("show")) {
+                document.getElementById("accordionRef").getElementsByClassName("accordion-button")[i].click();
+            }
+        }
+    }, 5000);
+    $(".flipCard7").mouseenter(function () {
+        window.clearTimeout(timer);
+        $(".flipCard7").unbind('mouseenter');
+    });
+});
+
 /*-----------------------------------*\
     #DISPLAY
 \*-----------------------------------*/
@@ -690,7 +740,7 @@ function isValidEmail(email) {
   
   function generateCvAndUpdateTemplate(template) {
     let email = $('#email').val().trim();
-    if (!isValidEmail(email) && !validateEmailAddress($(this).val())) {
+    if (!isValidEmail(email)) {
       alert('Please enter a valid email address.');
       return;
     }
@@ -766,7 +816,7 @@ function generateCV(template) {
   
     $(`#${template} #t_name`).html($('#fname').val() + " " + $('#lname').val());
     $(`#${template} #t_email`).html($('#email').val().trim());
-    $(`#${template} #t_number`).html($('#number').val());
+    $(`#${template} #t_number`).html($('#phone-input').val());
     $(`#${template} #t_address`).html($('#address').val() + "<br>" + $('#zip').val() + "<br>" + ($('#city').val() == null ? "" : $('#city').val() + ", ") + $('#state').val() + ", " + $('#country').val());
   
     if ($('#website').val().trim() == "") {
@@ -804,13 +854,13 @@ function generateCV(template) {
       }
   
       if (template == "Template_1") {
-        $('.t1 .left_side .education ul').append(`<li><span>${srt_date}-${end_date}</span><h5>${degree}</h5><p>${major}</p></li>`);
+        $('.t1 .left_side .education ul').append(`<li><span>${srt_date}-${end_date}</span><h5>${degree}</h5><p>${school}</p></li>`);
       }
       else if (template == 'Template_2') {
-        $('.t2 .upper .education .content').append(`<div class="edu"><div class="edu_year"><h4>${srt_date}-${end_date}</h4></div><div class="box"><div class="degree">${degree}</div><div class="major">${major}</div></div></div>`);
+        $('.t2 .upper .education .content').append(`<div class="edu"><div class="edu_year"><h4>${srt_date}-${end_date}</h4></div><div class="box"><div class="degree">${degree}</div><div class="major">${school}</div></div></div>`);
       }
       else if (template == 'Template_3') {
-        $('.t3 .content-box .education').append(`<p class="p1">${degree}&nbsp;(${srt_date}-${end_date})</p><p class="p2">${major}</p>`);
+        $('.t3 .content-box .education').append(`<p class="p1">${degree}&nbsp;(${srt_date}-${end_date})</p><p class="p2">${school}</p>`);
       }
     }
   
@@ -913,7 +963,7 @@ function generateCV(template) {
         $('.t2 .lower_right .achievements .content .con').append(`<div class="val">${achv}</div>`);
       }
       else if (template == 'Template_3') {
-        // Achievements not implemented for Template_3
+        $('.t3 .content-box .achievements').append(`<p class="ach">${achv}</p>`);
       }
     }
   
@@ -929,6 +979,28 @@ function generateCV(template) {
         $('.t3 .objective').html(`${summary}`);
       }
     }
+
+    let ref_items = $('#accordionRef .accordion-item').length;
+    for (let i = 0; i < ref_items; i++) {
+      let ref_name = $(`#accordionRef .accordion-item:nth-child(${i + 1}) .ref_name`).val().trim();
+      let ref_contact = $(`#accordionRef .accordion-item:nth-child(${i + 1}) .ref_contact`).val().trim();
+      
+      if (ref_name == "" || ref_contact == "") {
+        continue;
+      }
+    
+      if (template == "Template_1") {
+        $('.t1 .right_side .references').append(`<h5>${ref_name}</h5><p>${ref_contact}</p>`);
+      }
+      else if (template == 'Template_2') {
+        $('.t2 .lower_right .references .content').append(`<div class="con"><div class="name">${ref_name}</div><div class="email">${ref_contact}</div></div>`);
+      }
+      else if (template == 'Template_3') {
+        // Handle references for Template_3
+        $('.t3 .content-box .references').append(`<p class="ref">${ref_name} - ${ref_contact}</p>`);
+      }
+    }
+    
 }
 
   function backToForm(ele) {
@@ -968,7 +1040,50 @@ function generateCV(template) {
     $('.t1 .right_side .interest ul').html('');
     $('.t2 .lower .lower_left .interests .content').html('');
     $('.t3 .interest').html('');
+
+    // ***************** Emptying references *******************
+    $('.t1 .right_side .references').html('');
+    $('.t2 .lower_right .references .content').html('');
+    $('.t3 .content-box .references').html('');
 }
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Get all card titles
+    const cardTitles = document.querySelectorAll('.card-title');
+
+    // Add click event listener to each card title
+    cardTitles.forEach(title => {
+        title.addEventListener('click', function() {
+            // Get the parent card element
+            const parentCard = this.closest('.card');
+
+            // Get the collapse element within the parent card
+            const collapseElement = parentCard.querySelector('.collapse');
+
+            // Get all collapse elements except the one being toggled
+            const allCollapses = document.querySelectorAll('.collapse');
+            allCollapses.forEach(collapse => {
+                if (collapse !== collapseElement) {
+                    collapse.classList.remove('show');
+                }
+            });
+
+            // Toggle the collapse element
+            if (collapseElement) {
+                const isCollapsed = collapseElement.classList.contains('collapse');
+                if (isCollapsed) {
+                    collapseElement.classList.remove('collapse');
+                    collapseElement.classList.add('show');
+                } else {
+                    collapseElement.classList.add('collapse');
+                    collapseElement.classList.remove('show');
+                }
+            }
+        });
+    });
+});
+
 
 /*************** Phone number validataion ***************/
 
